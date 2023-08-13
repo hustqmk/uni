@@ -1,7 +1,7 @@
 pragma solidity>=0.8.0;
 
-import '../interface/IMyUniERC20.sol';
-import '../library/safeMath.sol';
+import './interface/IMyUniERC20.sol';
+import './library/safeMath.sol';
 
 contract MyUniERC20 is IMyUniERC20 {
     using SafeMath  for uint;
