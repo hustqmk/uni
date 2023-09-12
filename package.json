@@ -1,0 +1,51 @@
+{
+  "name": "@uni/core",
+  "description": "🎛 Core contracts for the uni protocol",
+  "version": "1.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hustqmk/uni"
+  },
+  "keywords": [
+    "uniswap",
+    "ethereum",
+    "v2",
+    "core",
+    "uniswap-v2"
+  ],
+  "files": [
+    "contracts",
+    "build"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.6",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^20.5.0",
+    "chai": "^4.2.0",
+    "ethereum-waffle": "^2.4.1",
+    "ethereumjs-util": "^6.2.0",
+    "mocha": "^6.2.3",
+    "prettier": "^1.19.1",
+    "rimraf": "^5.0.1",
+    "solc": "^0.8.21",
+    "ts-node": "^8.10.2"
+  },
+  "scripts": {
+    "lint": "yarn prettier ./test/*.ts --check",
+    "lint:fix": "yarn prettier ./test/*.ts --write",
+    "clean": "rimraf ./build/",
+    "precompile": "yarn clean",
+    "compile": "waffle .waffle.json",
+    "pretest": "yarn compile",
+    "test": "mocha",
+    "prepublishOnly": "yarn test"
+  },
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@types/sinon-chai": "^3.2.9",
+    "typescript": "^5.1.6"
+  }
+}
