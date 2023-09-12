@@ -1,7 +1,7 @@
 import { Contract, Wallet } from 'ethers'
 import { Web3Provider } from 'ethers/providers'
 import { deployContract } from 'ethereum-waffle'
-import { expandTo18Decimals } from './utils'
+import { expandTo18Decimals, remove18Decimals} from './utils'
 
 import MyUniFactory from '../../build/MyUniFactory.json'
 import ERC20 from '../../build/ERC20.json'
@@ -32,21 +32,21 @@ export async function pairFixture(provider: Web3Provider, [wallet] : Wallet[]): 
     const tokenA = await deployContract(wallet, ERC20, [expandTo18Decimals(10000)], overrides)
     const tokenB = await deployContract(wallet, ERC20, [expandTo18Decimals(10000)], overrides)
 
-    tokenA.on('Transfer', (from, to , value) => {
-        console.log("[TokenA]: ", from, to , value);
-    })
+    // tokenA.on('Transfer', (from, to , value) => {
+    //     console.log("[TokenA]: ", from, to , remove18Decimals(value));
+    // })
 
-    tokenB.on('Transfer', (from, to, value) => {
-        console.log("[TokenB]: ", from, to, value);
-    })
+    // tokenB.on('Transfer', (from, to, value) => {
+    //     console.log("[TokenB]: ", from, to, remove18Decimals(value));
+    // })
 
     await factory.createPair(tokenA.address, tokenB.address, overrides)
     const pairAddress = await factory.getPair(tokenA.address, tokenB.address)
     const pair = new Contract(pairAddress, JSON.stringify(MyUniPair.abi), provider).connect(wallet)
 
-    pair.on('Swap', (sender, amountIn0, amountIn1, amountOut0, amountOut1, to) => {
-        console.log("[SWAP]: ", sender, amountIn0, amountIn1, amountOut0, amountOut1, to);
-    })
+    // pair.on('Mint', (to, amountIn0, amountIn1, liquidity) => {
+    //     console.log("[Mint]: ", to, amountIn0, amountIn1, liquidity);
+    // })
 
     const token0Address = (await pair.token0()).address
     const token0 = tokenA.address === token0Address ? tokenA : tokenB

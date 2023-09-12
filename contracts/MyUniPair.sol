@@ -149,4 +149,8 @@ contract MyUniPair is IMyUniPair, MyUniERC20{
         _update(balance0, balance1, _reserve0, _reserve1);
         emit Burn(msg.sender, amount0, amount1, to);
     }
+
+    function sync() external lock {
+        _update(IERC20(token0).balanceOf(address(this)), IERC20(token1).balanceOf(address(this)), reserve0, reserve1);
+    }
 }
